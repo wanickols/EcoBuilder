@@ -10,24 +10,26 @@ public class FieldOfView : MonoBehaviour
     public LayerMask targetMask;
     public Transform targetTransform;
 
-    public event Action onTargetFound;
+    public event Action OnTargetFound;
 
     protected bool searching, running;
 
     private void Start()
     {
-        searching = true;
-        StartCoroutine(FindTargetWithDelay(.2f));
+        startSearching();
     }
+
+    public void startSearching() { searching = true; StartCoroutine(FindTargetWithDelay(.2f)); }
 
     IEnumerator FindTargetWithDelay(float delay) //searching for target
     {
         while (searching) 
         {
+            Debug.Log("Searching " + searching + viewRadius);
             yield return new WaitForSeconds(delay);
             if (FindClosestTarget()) 
             {
-                onTargetFound?.Invoke();
+                OnTargetFound?.Invoke();
             }
         }
     }
@@ -50,20 +52,23 @@ public class FieldOfView : MonoBehaviour
                 {
                     //if running run oposite direction //TODO
 
+                    Debug.Log("Searching Found");
+                    searching = false;
                     targetTransform = target;
                     min = distToTarget;
-                    searching = false;
                 }
             }
+          
             return true; //returns true if found
         }
         else 
-        { 
+        {
+            Debug.Log("No found target");
             return false; //returns false if nothing found
         }
 
     }
-    public void startSearching() { searching = true; }
+    
     public void stopSearching() { searching = false; }
     public void startRunning() { running = true; }
     public void stopRunning() { running = false; }

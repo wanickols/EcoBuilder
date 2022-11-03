@@ -24,6 +24,10 @@ public class EcoSystem : MonoBehaviour
     public int currGrassCount, currBunnyCount, currFoxCount;
 
 
+    [Header("Ecosystem Dimensions")]
+    public int xMax;
+    public int xMin, yMax, yMin, zMax, zMin;
+
     // Start is called before the first frame update
     void Start()
     {
@@ -73,8 +77,9 @@ public class EcoSystem : MonoBehaviour
 
     void createEntity(EntityHolder holder)
     {
-        Entity newEntity = new GameObject().AddComponent<Entity>();
-        newEntity.Init(holder);
+        GameObject body = Instantiate(holder.spawnObject, holder.getSpawnLocation(), Quaternion.identity) as GameObject;
+        //Entity newEntity = body.AddComponent(typeof(Entity)) as Entity;
+        //newEntity.Init(holder, body);
         updateCounts();
     }
 

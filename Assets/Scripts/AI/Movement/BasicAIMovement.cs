@@ -16,57 +16,66 @@ public class BasicAIMovement : MonoBehaviour
     public NavMeshAgent agent;
     public float movementRadius;
 
+    
 
     // Start is called before the first frame update
     protected void Start()
     {
-       
+        fov = GetComponent<FieldOfView>();
+        fov.OnTargetFound += Fov_OnTargetFound;
+        fov.targetMask = LayerMask.GetMask("Food");
         agent = GetComponent<NavMeshAgent>();
         running = false;
-        fov = GetComponent<FieldOfView>();
-        fov.targetMask = LayerMask.GetMask("Food");
         movementRadius = fov.viewRadius;
-        fov.onTargetFound += Fov_onTargetFound;
+       
     }
 
     //When target found change transform;
-    private void Fov_onTargetFound()
+    private void Fov_OnTargetFound()
     {
+        Debug.Log("Found Target");
         target = fov.targetTransform;
+        fov.OnTargetFound += Fov_OnTargetFound;
     }
 
     // Update is called once per frame
     protected void Update()
     {
-        if (!running)
-        {
-            if (!target)
+            if (!target || target == null)
                 idleMovement();
             else
             {
                 agent.SetDestination(target.position);
             }
-        }
-        else 
+    }
+
+    protected bool pathComplete()
+    {
+        if (Vector3.Distance(agent.destination, agent.transform.position) <= agent.stoppingDistance)
         {
-            //Debug.Log("Running. Bad!");
+            if (!agent.hasPath || agent.velocity.sqrMagnitude == 0f)
+            {
+                return true;
+            }
         }
+
+        return false;
     }
 
     public void idleMovement() 
     {
 
-        if (!agent.hasPath)
+
+        if (!agent.hasPath || agent.velocity.sqrMagnitude == 0f)
         {
-            Debug.Log("Idling");
+            Debug.Log("I'm movin");
             agent.SetDestination(GetPoints.Instance.GetRandomPoint(transform, movementRadius));
         }
         else 
         {
-            Debug.Log(agent.steeringTarget);
+            //Debug.Log(agent.steeringTarget);
         }
     }
-
 
     //Predator Event overides everything
 #if UNITY_EDITOR

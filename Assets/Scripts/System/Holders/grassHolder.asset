@@ -13,6 +13,9 @@ MonoBehaviour:
   m_Name: grassHolder
   m_EditorClassIdentifier: 
   transform: {fileID: 0}
-  createdCounter: 0
+  createdCounter: 65
+  currCounter: 0
+  system: {fileID: 0}
   profile: {fileID: 11400000, guid: bac09795f39f42a459efc1c87681fe3d, type: 2}
   entityName: grass
+  spawnObject: {fileID: 6117336473286709887, guid: 3566d541e5696124a8cbd73fd2155465, type: 3}

@@ -14,5 +14,14 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   transform: {fileID: 0}
   createdCounter: 0
+  currCounter: 0
+  system: {fileID: 0}
   profile: {fileID: 11400000, guid: 902bf064ac377e64b8043f17ed9d83d7, type: 2}
   entityName: fox
+  xMax: 0
+  xMin: 0
+  yMax: 0
+  yMin: 0
+  zMax: 0
+  zMin: 0
+  spawnObject: {fileID: 2002380361829805427, guid: f4d9dd844570cd1418d9a8c1047a65da, type: 3}

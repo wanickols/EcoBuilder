@@ -20,13 +20,24 @@ public class EntityHolder : ScriptableObject
     public string entityName;
 
 
-    public void Init(string name, EcoSystem system) 
+    private int xPos, yPos, zPos;
+
+    public GameObject spawnObject;
+
+    public void Init(string name, EcoSystem system)  
     {
         transform = new GameObject(name).transform;
         this.system = system;
         transform.SetParent(system.transform);
     }
 
+    public Vector3 getSpawnLocation() 
+    {
+        xPos = Random.Range(system.xMin, system.xMax + 1);
+        yPos = Random.Range(system.yMin, system.yMax + 1);
+        zPos = Random.Range(system.zMin, system.zMax + 1);
+        return new Vector3(xPos, yPos, zPos);
+    }
 
 
 }

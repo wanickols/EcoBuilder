@@ -23,11 +23,12 @@ public class EntityProfile : ScriptableObject
     public int hungerThreshold;
     public ObjectType foodSource; //no omnivores rn
 
-
+    
     public int getChildCount()
     {
         return Random.Range(minChildCount, maxChildCount);
     }
+
 
 }
 

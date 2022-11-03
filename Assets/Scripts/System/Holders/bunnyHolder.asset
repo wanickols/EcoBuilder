@@ -14,5 +14,14 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   transform: {fileID: 0}
   createdCounter: 0
+  currCounter: 0
+  system: {fileID: 0}
   profile: {fileID: 11400000, guid: 329a8f41d9044504db428765651aa36e, type: 2}
   entityName: bunny
+  xMax: 93
+  xMin: -93
+  yMax: 0
+  yMin: 0
+  zMax: -93
+  zMin: 93
+  spawnObject: {fileID: 2002380361829805427, guid: f4d9dd844570cd1418d9a8c1047a65da, type: 3}

@@ -9,6 +9,12 @@ public class Entity : MonoBehaviour
     public EntityHolder holder;
     public int currHunger;
     public string baseName;
+    public GameObject body;
+
+    private void Start()
+    {
+        Init();
+    }
 
     public event Action<string> OnEntityDied;
 
@@ -21,20 +27,23 @@ public class Entity : MonoBehaviour
         }
     }
 
-    public void Init(EntityHolder holder) 
+    public void Init() 
     {
-        this.holder = holder;
-
+     
         holder.system.OnTick += OnTickEvent;
         OnEntityDied += holder.system.OnEntityDeathListener;
 
         name = holder.profile.name + holder.createdCounter;
-        transform.SetParent(holder.transform);
+        
         ++holder.createdCounter;
         ++holder.currCounter;
 
         if(holder.profile.consumer)
             setName();
+
+        body.transform.SetParent(transform);
+        transform.SetParent(holder.transform);
+        //body.AddComponent(typeof(Entity)) as Entity;
     }
 
     void setName() 
@@ -92,8 +101,15 @@ public class Entity : MonoBehaviour
     private void OnDestroy()
     {
         --holder.currCounter;
+        Destroy(body);
         OnEntityDied?.Invoke(name);
         holder.system.OnTick -= OnTickEvent; //UnSub
     }
 
+
+    public void Eat(int nutritionalValue)
+    {
+        currHunger -= nutritionalValue;
+        body.SendMessage("startSearching");        
+    }
 }

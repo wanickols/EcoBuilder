@@ -25,7 +25,7 @@ public class FieldOfView : MonoBehaviour
     {
         while (searching) 
         {
-            Debug.Log("Searching " + searching + viewRadius);
+            //Debug.Log("Searching " + searching + viewRadius);
             yield return new WaitForSeconds(delay);
             if (FindClosestTarget()) 
             {
@@ -52,7 +52,7 @@ public class FieldOfView : MonoBehaviour
                 {
                     //if running run oposite direction //TODO
 
-                    Debug.Log("Searching Found");
+                    //Debug.Log("Searching Found");
                     searching = false;
                     targetTransform = target;
                     min = distToTarget;
@@ -63,7 +63,7 @@ public class FieldOfView : MonoBehaviour
         }
         else 
         {
-            Debug.Log("No found target");
+            //Debug.Log("No found target");
             return false; //returns false if nothing found
         }
 

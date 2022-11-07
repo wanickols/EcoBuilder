@@ -5,7 +5,7 @@ using UnityEngine;
 
 public class GrassAI : MonoBehaviour
 {
-
+    private bool eatAllowed = true;
     public EntityProfile profile;
     // Start is called before the first frame update
     IEnumerator Die()
@@ -18,10 +18,14 @@ public class GrassAI : MonoBehaviour
 
     private void OnTriggerEnter(Collider collision)
     {
+        if (!eatAllowed)
+            return;
+
             //Check for a match with the specific tag on any GameObject that collides with your GameObject
             if (collision.gameObject.tag == "Herbavore")
             {
-            collision.gameObject.SendMessage("Eat", profile.nutritionalValue);
+                eatAllowed = false;
+                collision.gameObject.SendMessage("Eat", profile.nutritionalValue);
                 StartCoroutine(Die());
             }
     }

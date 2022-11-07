@@ -5,7 +5,7 @@ using UnityEngine;
 public class BunnyAI : BasicAIMovement
 {
 
-    private Rigidbody rigidbody;
+    private new Rigidbody rigidbody;
   
 
     // Start is called before the first frame update

@@ -11,6 +11,8 @@ public class Entity : MonoBehaviour
     public string baseName;
     public GameObject body;
 
+    private bool searching;
+
     private void Start()
     {
         Init();
@@ -29,7 +31,9 @@ public class Entity : MonoBehaviour
 
     public void Init() 
     {
-     
+
+        searching = false;
+
         holder.system.OnTick += OnTickEvent;
         OnEntityDied += holder.system.OnEntityDeathListener;
 
@@ -51,18 +55,13 @@ public class Entity : MonoBehaviour
         name = baseName + " (" + currHunger + '/' + holder.profile.maxHungerBeforeDeath + ')';
     }
 
-    private void Update()
-    {
-        checkForMultiply();
-        checkForFood();
-    }
+ 
 
     protected void checkForMultiply() 
     {
         if (isHealthy) 
         {
             //eventually check for nearby radius of bunnies, but for now just gonna base it off totals
-            
         }    
     }
 
@@ -70,18 +69,22 @@ public class Entity : MonoBehaviour
     {
         if (currHunger >= holder.profile.hungerThreshold) 
         {
-            //Search for nearby objects
-            //check found objects against foodtype
-            //holder.profile.foodSource; //plant or animal (may need to adjust)
-
+            if (!searching)
+            {
+                body.SendMessage("startSearching");
+                searching = true;
+            }
         }
     }
 
     private void OnTickEvent() 
     {
+
+        checkForMultiply();
         //Debug.Log("Tick from" + name);
-        if (holder.profile.consumer) 
-        {
+        if (holder.profile.objectType == ObjectType.Plant)
+            return;
+
             currHunger += holder.profile.hungerAccumulationVal;
 
             if (currHunger >= holder.profile.maxHungerBeforeDeath)
@@ -94,7 +97,7 @@ public class Entity : MonoBehaviour
                 checkForFood();
             }
             setName(); //resets name with huuger
-        }
+       
         
     }
 
@@ -109,7 +112,12 @@ public class Entity : MonoBehaviour
 
     public void Eat(int nutritionalValue)
     {
+        
         currHunger -= nutritionalValue;
-        body.SendMessage("startSearching");        
+        
+        if (currHunger < 0)
+            currHunger = 0;
+
+        searching = false;
     }
 }

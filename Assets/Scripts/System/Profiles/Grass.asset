@@ -25,4 +25,3 @@ MonoBehaviour:
   hungerAccumulationVal: 0
   hungerThreshold: 0
   foodSource: 0
-  body: {fileID: 6117336473286709887, guid: 3566d541e5696124a8cbd73fd2155465, type: 3}

@@ -32,8 +32,6 @@ public class EntityProfile : ScriptableObject
 
 }
 
-
-
 public enum ObjectType
 {
     Plant,

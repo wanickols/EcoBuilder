@@ -61,7 +61,15 @@ public class Entity : MonoBehaviour
     {
         if (isHealthy) 
         {
-            //eventually check for nearby radius of bunnies, but for now just gonna base it off totals
+            body.SendMessage("checkMultiply", holder.profile);
+
+            if (this.holder.profile.consumer)
+            {
+                body.SendMessage("startSearching");
+                searching = true;
+                //notify other entity
+            }
+
         }    
     }
 

@@ -12,6 +12,7 @@ public class BunnyAI : BasicAIMovement
     new protected void Start()
     {
         base.Start();
+        fov.targetMask = LayerMask.GetMask("Grass");
         rigidbody = GetComponent<Rigidbody>();  
     }
 

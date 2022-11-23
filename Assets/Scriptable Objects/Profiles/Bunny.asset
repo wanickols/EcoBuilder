@@ -16,7 +16,7 @@ MonoBehaviour:
   nutritionalValue: 50
   multiplier: 1
   multiplyFrequency: 10
-  parentCountRequired: 3
+  parentCountRequired: 2
   maxHungerAllowed: 75
   minChildCount: 1
   maxChildCount: 4

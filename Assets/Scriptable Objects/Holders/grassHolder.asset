@@ -10,11 +10,11 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 889c48318c174664e94d728c67caa98f, type: 3}
-  m_Name: grassHolder
+  m_Name: 
   m_EditorClassIdentifier: 
   transform: {fileID: 0}
-  createdCounter: 65
-  currCounter: 0
+  createdCounter: 503
+  currCounter: -1
   system: {fileID: 0}
   profile: {fileID: 11400000, guid: bac09795f39f42a459efc1c87681fe3d, type: 2}
   entityName: grass

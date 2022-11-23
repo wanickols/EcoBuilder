@@ -7,6 +7,14 @@ public class GrassAI : MonoBehaviour
 {
     private bool eatAllowed = true;
     public EntityProfile profile;
+    protected FieldOfView fov;
+
+
+    protected void Start() 
+    {
+        fov = GetComponent<FieldOfView>();
+    }
+
     // Start is called before the first frame update
     IEnumerator Die()
     {

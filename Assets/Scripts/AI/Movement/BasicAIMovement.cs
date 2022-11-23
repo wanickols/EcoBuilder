@@ -23,7 +23,7 @@ public class BasicAIMovement : MonoBehaviour
     {
         fov = GetComponent<FieldOfView>();
         fov.OnTargetFound += Fov_OnTargetFound;
-        fov.targetMask = LayerMask.GetMask("Food");
+        
         agent = GetComponent<NavMeshAgent>();
         running = false;
         movementRadius = fov.viewRadius;
@@ -33,7 +33,6 @@ public class BasicAIMovement : MonoBehaviour
     //When target found change transform;
     private void Fov_OnTargetFound()
     {
-        Debug.Log("Found Target");
         target = fov.targetTransform;
         fov.OnTargetFound += Fov_OnTargetFound;
     }
@@ -68,7 +67,7 @@ public class BasicAIMovement : MonoBehaviour
 
         if (!agent.hasPath || agent.velocity.sqrMagnitude == 0f)
         {
-            Debug.Log("I'm movin");
+            //Debug.Log("I'm movin");
             agent.SetDestination(GetPoints.Instance.GetRandomPoint(transform, movementRadius));
         }
         else 

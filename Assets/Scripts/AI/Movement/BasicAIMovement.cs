@@ -30,6 +30,7 @@ public class BasicAIMovement : MonoBehaviour
        
     }
 
+
     //When target found change transform;
     private void Fov_OnTargetFound()
     {

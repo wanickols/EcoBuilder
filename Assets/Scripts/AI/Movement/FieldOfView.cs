@@ -11,6 +11,7 @@ public class FieldOfView : MonoBehaviour
     public Transform targetTransform;
 
     public event Action OnTargetFound;
+    public event Action OnMultiply;
 
     protected bool searching, running;
 
@@ -24,27 +25,38 @@ public class FieldOfView : MonoBehaviour
 
     public void checkMultiply(EntityProfile profile) 
     {
-        LayerMask tempMask = LayerMask.GetMask(profile.name);
-        Collider[] searchResults = getMultiplyCandidates(tempMask);
 
-        //Debug.Log(profile.name + ": " + searchResults.Length + "/" + profile.parentCountRequired);
-        if (searchResults.Length >= profile.parentCountRequired) 
+        List<Collider> searchResults = getMultiplyCandidates(profile.multiplyerMask);
+
+        Debug.Log(profile.name + ": " + (searchResults.Count + 1) + "/" + profile.parentCountRequired);
+        if (searchResults.Count + 1 >= profile.parentCountRequired) 
         {
             FindClosestTarget(searchResults);
             Debug.Log(targetTransform);
+            OnMultiply?.Invoke();
+          
         }
       
         // get closest
         //determine multiply
     }
 
-    private Collider[] getMultiplyCandidates(LayerMask loverMask) 
+    private List<Collider> getMultiplyCandidates(LayerMask loverMask)
     {
-        return Physics.OverlapSphere(transform.position, viewRadius, loverMask);
- 
-    
-    }
+        Collider[] searchResults = Physics.OverlapSphere(transform.position, viewRadius, loverMask);
+        List<Collider> filteredResults = new List<Collider>();
+        int i = 0;
+        foreach (var hitAsset in searchResults)
+        {
+            if (hitAsset.transform.position != transform.position)
+            { //do something} }
 
+                filteredResults.Add(hitAsset);
+                i++;
+            }
+        }
+        return filteredResults;
+    }
     //Coroutine
     IEnumerator FindTargetWithDelay(float delay) //searching for target
     {
@@ -94,14 +106,14 @@ public class FieldOfView : MonoBehaviour
 
     }
 
-    bool FindClosestTarget(Collider[] targetsInViewRadius) 
+    bool FindClosestTarget(List<Collider> targetsInViewRadius) 
     {
-        if (targetsInViewRadius.Length > 0)
+        if (targetsInViewRadius.Count > 0)
         {
             float min = viewRadius;
 
             //Finds closest target
-            for (int i = 0; i < targetsInViewRadius.Length; i++)
+            for (int i = 0; i < targetsInViewRadius.Count; i++)
             {
                 Transform target = targetsInViewRadius[i].transform;
                 float distToTarget = Vector3.Distance(transform.position, target.position);

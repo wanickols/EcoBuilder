@@ -64,18 +64,13 @@ public class EcoSystem : MonoBehaviour
     {
         while (true)
         {
-
-            checkForMultiply(grassHolder);
-            checkForMultiply(bunnyHolder);
-            checkForMultiply(foxHolder);
-
             ++numOfTicksInSession;
             OnTick?.Invoke(); //Tick Event
             yield return new WaitForSeconds(tickDurationInSec);
         }
     }
 
-    void createEntity(EntityHolder holder)
+    public void createEntity(EntityHolder holder)
     {
         GameObject body = Instantiate(holder.spawnObject, holder.getSpawnLocation(), Quaternion.identity) as GameObject;
         //Entity newEntity = body.AddComponent(typeof(Entity)) as Entity;
@@ -87,35 +82,7 @@ public class EcoSystem : MonoBehaviour
 
 
     //Will distribute this in final version
-    void checkForMultiply(EntityHolder holder)
-    {
-        if (!holder)
-        {
-            //Debug.Log("No Holder");
-            return;
-        }
-
-        if ((numOfTicksInSession + 1) % holder.profile.multiplyFrequency != 0)
-            return;
-
-        int numHealthy = 0;
-        foreach (Transform e in holder.transform)
-        {
-            if (e.GetComponent<Entity>().isHealthy)
-            {
-                ++numHealthy;
-            }
-        }
-
-        int timesMultiply = numHealthy / holder.profile.parentCountRequired;
-        for (int i = 0; i < timesMultiply; i++)
-        {
-            for (int j = 0; j < holder.profile.getChildCount(); j++)
-            {
-                createEntity(holder);
-            }
-        }
-    }
+ 
 
     public void OnEntityDeathListener(String name)
     {

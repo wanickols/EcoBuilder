@@ -15,6 +15,9 @@ MonoBehaviour:
   objectType: 0
   nutritionalValue: 20
   multiplier: 1
+  multiplyerMask:
+    serializedVersion: 2
+    m_Bits: 64
   multiplyFrequency: 5
   parentCountRequired: 4
   maxHungerAllowed: 1

@@ -15,6 +15,9 @@ MonoBehaviour:
   objectType: 1
   nutritionalValue: 75
   multiplier: 1
+  multiplyerMask:
+    serializedVersion: 2
+    m_Bits: 8
   multiplyFrequency: 20
   parentCountRequired: 2
   maxHungerAllowed: 100
@@ -25,4 +28,3 @@ MonoBehaviour:
   hungerAccumulationVal: 5
   hungerThreshold: 50
   foodSource: 1
-  body: {fileID: 2002380361829805427, guid: f4d9dd844570cd1418d9a8c1047a65da, type: 3}

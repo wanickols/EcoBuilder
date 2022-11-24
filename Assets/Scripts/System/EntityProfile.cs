@@ -10,6 +10,7 @@ public class EntityProfile : ScriptableObject
 
     [Header("Multiplyer")]
     public bool multiplier; //does this object multiply itself
+    public LayerMask multiplyerMask;
     public int multiplyFrequency; 
     public int parentCountRequired; //How many opjects must be nearby to multiply
     public int maxHungerAllowed; //How hungry a object can be to multiply

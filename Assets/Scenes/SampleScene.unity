@@ -1583,8 +1583,8 @@ MonoBehaviour:
   grassHolder: {fileID: 11400000, guid: 025e6025650095f488f779ef54855f8d, type: 2}
   bunnyHolder: {fileID: 11400000, guid: 40471ea4aeb9fbb4fa2bade78bba18b4, type: 2}
   foxHolder: {fileID: 11400000, guid: b0872031fb44ced4a84ee8a801498e4f, type: 2}
-  startingGrass: 4
-  startingBunny: 1
+  startingGrass: 8
+  startingBunny: 3
   startingFox: 0
   numOfTicksInSession: 0
   currGrassCount: 0

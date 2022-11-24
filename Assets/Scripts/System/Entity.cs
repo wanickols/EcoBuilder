@@ -117,6 +117,12 @@ public class Entity : MonoBehaviour
         holder.system.OnTick -= OnTickEvent; //UnSub
     }
 
+    public void Fov_OnMultiply()
+    {
+        //Fix me, change spawn location to near parents
+        holder.system.createEntity(holder);
+    }
+
 
     public void Eat(int nutritionalValue)
     {

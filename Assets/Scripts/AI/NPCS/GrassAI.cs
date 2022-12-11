@@ -13,6 +13,8 @@ public class GrassAI : MonoBehaviour
     protected void Start() 
     {
         fov = GetComponent<FieldOfView>();
+        Entity entity = GetComponent<Entity>();
+        fov.OnMultiply += entity.Fov_OnMultiply;
     }
 
     // Start is called before the first frame update

@@ -6,10 +6,10 @@ using System;
 public class Entity : MonoBehaviour
 {
 
-    public EntityHolder holder;
-    public int currHunger;
-    public string baseName;
-    public GameObject body;
+    [SerializeField] public EntityHolder holder;
+    [SerializeField] public int currHunger;
+    [SerializeField] public string baseName;
+    [SerializeField] public GameObject body;
 
     private bool searching;
 
@@ -39,8 +39,8 @@ public class Entity : MonoBehaviour
 
         name = holder.profile.name + holder.createdCounter;
         
-        ++holder.createdCounter;
-        ++holder.currCounter;
+        holder.createdCounter++;
+        holder.currCounter++;
 
         if(holder.profile.consumer)
             setName();

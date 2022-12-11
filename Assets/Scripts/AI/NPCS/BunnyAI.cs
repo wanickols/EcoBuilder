@@ -6,7 +6,6 @@ public class BunnyAI : BasicAIMovement
 {
 
     private new Rigidbody rigidbody;
-    Entity entity;
   
 
     // Start is called before the first frame update
@@ -14,7 +13,7 @@ public class BunnyAI : BasicAIMovement
     {
         base.Start();
         fov.targetMask = LayerMask.GetMask("Grass");
-        entity = GetComponent<Entity>();
+        Entity entity = GetComponent<Entity>();
         fov.OnMultiply += entity.Fov_OnMultiply;
 
         rigidbody = GetComponent<Rigidbody>();

@@ -5,15 +5,15 @@ using System;
 
 public class FieldOfView : MonoBehaviour
 {
-    public float viewRadius;
+    [SerializeField] public float viewRadius;
 
-    public LayerMask targetMask;
-    public Transform targetTransform;
+    [SerializeField] public LayerMask targetMask;
+    [SerializeField] public Transform targetTransform;
 
-    public event Action OnTargetFound;
-    public event Action OnMultiply;
+    [SerializeField] public event Action OnTargetFound;
+    [SerializeField] public event Action OnMultiply;
 
-    protected bool searching, running;
+    [SerializeField] protected bool searching, running;
 
     private void Start()
     {

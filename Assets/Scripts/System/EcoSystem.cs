@@ -29,6 +29,8 @@ public class EcoSystem : MonoBehaviour
     [SerializeField] public int xMax;
     [SerializeField] public int xMin, yMax, yMin, zMax, zMin;
 
+    [SerializeField] public GetPoints points;
+
     // Start is called before the first frame update
     void Start()
     {

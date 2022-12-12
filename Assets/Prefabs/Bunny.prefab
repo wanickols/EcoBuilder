@@ -260,8 +260,11 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   controller: {fileID: 2002380361829805422}
   target: {fileID: 0}
+  fov: {fileID: 2002380361829805418}
+  entity: {fileID: 1476450037}
   agent: {fileID: 2002380361829805423}
   movementRadius: 10
+  rigidbody: {fileID: 2002380361829805421}
 --- !u!54 &2002380361829805421
 Rigidbody:
   m_ObjectHideFlags: 0

@@ -134,4 +134,9 @@ public class Entity : MonoBehaviour
 
         searching = false;
     }
+
+    public Vector3 GetRandomPoint(Transform point = null, float radius = 0) 
+    {
+        return holder.system.points.GetRandomPoint(point, radius);
+    }
 }

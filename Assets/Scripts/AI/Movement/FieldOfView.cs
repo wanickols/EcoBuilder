@@ -28,11 +28,11 @@ public class FieldOfView : MonoBehaviour
 
         List<Collider> searchResults = getMultiplyCandidates(profile.multiplyerMask);
 
-        Debug.Log(profile.name + ": " + (searchResults.Count + 1) + "/" + profile.parentCountRequired);
+        //Debug.Log(profile.name + ": " + (searchResults.Count + 1) + "/" + profile.parentCountRequired);
         if (searchResults.Count + 1 >= profile.parentCountRequired) 
         {
             FindClosestTarget(searchResults);
-            Debug.Log(targetTransform);
+            //Debug.Log(targetTransform);
             OnMultiply?.Invoke();
           
         }
@@ -88,14 +88,13 @@ public class FieldOfView : MonoBehaviour
                 if (distToTarget < min)
                 {
                     //if running run oposite direction //TODO
-
-                    //Debug.Log("Searching Found");
-                    searching = false;
                     targetTransform = target;
                     min = distToTarget;
+                    //Debug.Log("Searching Found");
+
                 }
             }
-          
+            searching = false;
             return true; //returns true if found
         }
         else 
@@ -122,12 +121,12 @@ public class FieldOfView : MonoBehaviour
                     //if running run oposite direction //TODO
 
                     //Debug.Log("Searching Found");
-                    searching = false;
+                   
                     targetTransform = target;
                     min = distToTarget;
                 }
             }
-
+            searching = false;
             return true; //returns true if found
         }
         else

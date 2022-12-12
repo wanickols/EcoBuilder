@@ -5,19 +5,17 @@ using UnityEngine;
 public class BunnyAI : BasicAIMovement
 {
 
-    private new Rigidbody rigidbody;
-    Entity entity;
-  
+    [SerializeField] private new Rigidbody rigidbody;
 
     // Start is called before the first frame update
     new protected void Start()
     {
         base.Start();
         fov.targetMask = LayerMask.GetMask("Grass");
-        entity = GetComponent<Entity>();
         fov.OnMultiply += entity.Fov_OnMultiply;
 
-        rigidbody = GetComponent<Rigidbody>();
+        if(!rigidbody)
+            rigidbody = GetComponent<Rigidbody>();
        
     }
 

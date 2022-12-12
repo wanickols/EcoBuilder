@@ -17,7 +17,7 @@ MonoBehaviour:
   multiplier: 1
   multiplyerMask:
     serializedVersion: 2
-    m_Bits: 8
+    m_Bits: 128
   multiplyFrequency: 20
   parentCountRequired: 2
   maxHungerAllowed: 100

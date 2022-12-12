@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using Unity.Netcode;
 
 //this class is just a holder class for animals of a certain type
 
@@ -28,10 +29,13 @@ public class EntityHolder : ScriptableObject
     public void Init(string name, EcoSystem system)  
     {
         transform = new GameObject(name).transform;
+        transform.gameObject.AddComponent<NetworkObject>();
+        NetworkObject nw = transform.GetComponent<NetworkObject>();
+        nw.SpawnWithOwnership(nw.OwnerClientId);
         this.system = system;
         currCounter = createdCounter = 0;
         maxCounter = system.maxCount;
-        //transform.SetParent(system.transform);
+        transform.SetParent(system.transform);
     }
 
     public Vector3 getSpawnLocation() 

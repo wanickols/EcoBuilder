@@ -45,9 +45,10 @@ public class Entity : NetworkBehaviour
         if(holder.profile.consumer)
             setName();
 
+        if (!IsSpawned)
+            GetComponent<NetworkObject>().SpawnWithOwnership(OwnerClientId);
         body.transform.SetParent(transform);
-        //transform.SetParent(holder.transform);
-        //body.AddComponent(typeof(Entity)) as Entity;
+        transform.SetParent(holder.transform);
     }
 
     void setName() 
@@ -109,14 +110,6 @@ public class Entity : NetworkBehaviour
             setName(); //resets name with huuger
        
         
-    }
-
-    private void OnDestroy()
-    {
-        --holder.currCounter;
-        Destroy(body);
-        OnEntityDied?.Invoke(name);
-        holder.system.OnTick -= OnTickEvent; //UnSub
     }
 
     public void Fov_OnMultiply()

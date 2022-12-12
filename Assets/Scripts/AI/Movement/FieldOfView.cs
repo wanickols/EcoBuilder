@@ -66,8 +66,6 @@ public class FieldOfView : MonoBehaviour
         {
             if (FindClosestTarget())
                 OnTargetFound?.Invoke();
-            if (targetTransform)
-                searching = false;
         }
     }
 
@@ -135,6 +133,7 @@ public class FieldOfView : MonoBehaviour
         }
     }
 
+    public bool getSearching() { return searching; }
     public void stopSearching() { searching = false; }
     public void startRunning() { running = true; }
     public void stopRunning() { running = false; }

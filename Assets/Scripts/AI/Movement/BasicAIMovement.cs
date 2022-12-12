@@ -2,8 +2,8 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.AI;
-
-public class BasicAIMovement : MonoBehaviour
+using Unity.Netcode;
+public class BasicAIMovement : NetworkBehaviour
 {
 
     [SerializeField] protected CharacterController controller;
@@ -23,9 +23,11 @@ public class BasicAIMovement : MonoBehaviour
             entity = GetComponent<Entity>();
         if (!fov)
             fov = GetComponent<FieldOfView>();
-        fov.OnTargetFound += Fov_OnTargetFound;
+        
         if (!agent)
             agent = GetComponent<NavMeshAgent>();
+
+        fov.OnTargetFound += Fov_OnTargetFound;
         movementRadius = fov.viewRadius;
     }
 
@@ -39,6 +41,9 @@ public class BasicAIMovement : MonoBehaviour
     // Update is called once per frame
     protected void Update()
     {
+        if (!IsOwner)
+            return;
+
             if (!target || target == null)
                 idleMovement();
             else
@@ -62,7 +67,11 @@ public class BasicAIMovement : MonoBehaviour
 
     public void idleMovement() 
     {
+        if (!IsOwner)
+            return;
 
+        if(!fov.getSearching())
+            fov.startSearching();
 
         if (!agent.hasPath || agent.velocity.sqrMagnitude == 0f)
         {

@@ -4,16 +4,18 @@ using UnityEngine;
 using System;
 using Unity.Netcode;
 
-public class EcoSystem : MonoBehaviour
+public class EcoSystem : NetworkBehaviour
 {
 
     //Events
     public event Action OnTick; //Tick event //May pass number of tick later
 
+  
+
     [Header("System Settings")]
     [SerializeField] private float tickDurationInSec = 1.0f;
     [SerializeField] public EntityProfile grassProfile, bunnyProfile, foxProfile;
-    [SerializeField] public NetworkVariable<EntityHolder> grassHolder, bunnyHolder, foxHolder = new NetworkVariable<EntityHolder>(); //holders for entities
+    [SerializeField] public EntityHolder grassHolder, bunnyHolder, foxHolder; // holders for entities
     [SerializeField] public int maxCount;
 
     [Header("Session Settings")]
@@ -31,35 +33,44 @@ public class EcoSystem : MonoBehaviour
     [SerializeField] public int xMin, yMax, yMin, zMax, zMin;
 
     [SerializeField] public GetPoints points;
+    private NetworkObject networkObject;
 
     // Start is called before the first frame update
-    void Start()
+    public override void OnNetworkSpawn()
     {
+        if (!networkObject)
+            networkObject = GetComponent<NetworkObject>();
+        if (!IsSpawned)
+            networkObject.Spawn();
+        
+        if (!IsOwner)
+            return;
+        Debug.Log("Ecoystem Init");
+
         initEcosystem();
         StartCoroutine(runGameLoop());
     }
-
     void initEcosystem()
     {
         //Holder init
-        grassHolder.Value.Init("Grass", this);
-        bunnyHolder.Value.Init("Bunnies", this);
-        foxHolder.Value.Init("Foxes", this);
+        grassHolder.Init("Grass", this);
+        bunnyHolder.Init("Bunnies", this);
+        foxHolder.Init("Foxes", this);
 
         //Create entities
         for (int i = 0; i < startingGrass; i++)
         {
-            createEntity(grassHolder.Value);
+            createEntity(grassHolder);
         }
 
         for (int i = 0; i < startingBunny; i++)
         {
-            createEntity(bunnyHolder.Value);
+            createEntity(bunnyHolder);
         }
 
         for (int i = 0; i < startingFox; i++)
         {
-            createEntity(foxHolder.Value);
+            createEntity(foxHolder);
         }
         updateCounts();
     }
@@ -79,7 +90,7 @@ public class EcoSystem : MonoBehaviour
         updateCounts();
         if (holder.currCounter < holder.maxCounter)
         {
-            GameObject body = Instantiate(holder.spawnObject, holder.getSpawnLocation(), Quaternion.identity) as GameObject;
+            GameObject body = Instantiate(holder.spawnObject, holder.getSpawnLocation(), Quaternion.identity);
             //Entity newEntity = body.AddComponent(typeof(Entity)) as Entity;
             //newEntity.Init(holder, body);
        
@@ -100,9 +111,12 @@ public class EcoSystem : MonoBehaviour
     
     public void updateCounts() 
     {
-        currGrassCount = grassHolder.Value.currCounter;
-        currBunnyCount = bunnyHolder.Value.currCounter;
-        currFoxCount = foxHolder.Value.currCounter;
+        if (!IsOwner)
+            return;
+
+        currGrassCount = grassHolder.currCounter;
+        currBunnyCount = bunnyHolder.currCounter;
+        currFoxCount = foxHolder.currCounter;
     }
    
 

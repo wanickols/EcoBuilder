@@ -7,26 +7,27 @@ public class EcoSystem : MonoBehaviour
 {
 
     //Events
-    public event Action OnTick; //Tick event //May pass number of tick later
+     public event Action OnTick; //Tick event //May pass number of tick later
 
     [Header("System Settings")]
-    public float tickDurationInSec = 1.0f;
-    public EntityProfile grassProfile, bunnyProfile, foxProfile;
-    public EntityHolder grassHolder, bunnyHolder, foxHolder; //folders objects for entities 
+    [SerializeField] private float tickDurationInSec = 1.0f;
+    [SerializeField] public EntityProfile grassProfile, bunnyProfile, foxProfile;
+    [SerializeField] public EntityHolder grassHolder, bunnyHolder, foxHolder; //folders objects for entities 
+    [SerializeField] public int maxCount;
 
     [Header("Session Settings")]
-    public int startingGrass;
-    public int startingBunny;
-    public int startingFox;
+    [SerializeField] private int startingGrass;
+    [SerializeField] private int startingBunny;
+    [SerializeField] private int startingFox;
 
     [Header("Session Data")]
-    public int numOfTicksInSession = 0;
-    public int currGrassCount, currBunnyCount, currFoxCount;
+    [SerializeField] private int numOfTicksInSession = 0;
+    [SerializeField] public int currGrassCount, currBunnyCount, currFoxCount;
 
 
     [Header("Ecosystem Dimensions")]
-    public int xMax;
-    public int xMin, yMax, yMin, zMax, zMin;
+    [SerializeField] public int xMax;
+    [SerializeField] public int xMin, yMax, yMin, zMax, zMin;
 
     // Start is called before the first frame update
     void Start()
@@ -57,7 +58,7 @@ public class EcoSystem : MonoBehaviour
         {
             createEntity(foxHolder);
         }
-   
+        updateCounts();
     }
 
     IEnumerator runGameLoop()
@@ -72,10 +73,12 @@ public class EcoSystem : MonoBehaviour
 
     public void createEntity(EntityHolder holder)
     {
-        GameObject body = Instantiate(holder.spawnObject, holder.getSpawnLocation(), Quaternion.identity) as GameObject;
-        //Entity newEntity = body.AddComponent(typeof(Entity)) as Entity;
-        //newEntity.Init(holder, body);
         updateCounts();
+        if (holder.currCounter < holder.maxCounter)
+        {
+            GameObject body = Instantiate(holder.spawnObject, holder.getSpawnLocation(), Quaternion.identity) as GameObject;
+        }
+       
     }
 
 

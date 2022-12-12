@@ -9,25 +9,28 @@ public class EntityHolder : ScriptableObject
 {
 
     [HideInInspector]
-    public Transform transform;
+    [SerializeField] public Transform transform;
     [HideInInspector]
-    public int createdCounter, currCounter;
+    [SerializeField] public int createdCounter, currCounter;
     [HideInInspector]
-    public EcoSystem system;
+    [SerializeField] public EcoSystem system;
 
     [Header("Entity Details")]
-    public EntityProfile profile;
-    public string entityName;
+    [SerializeField] public EntityProfile profile;
+    [SerializeField] public string entityName;
+    [SerializeField] public int maxCounter;
 
 
     private int xPos, yPos, zPos;
 
     public GameObject spawnObject;
 
-    public void Init(string name, EcoSystem system)  
+    public void Init(string name, EcoSystem system) 
     {
         transform = new GameObject(name).transform;
         this.system = system;
+        currCounter = createdCounter = 0;
+        maxCounter = system.maxCount;
         transform.SetParent(system.transform);
     }
 

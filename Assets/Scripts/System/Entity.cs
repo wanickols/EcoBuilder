@@ -2,8 +2,8 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using System;
-
-public class Entity : MonoBehaviour
+using Unity.Netcode;
+public class Entity : NetworkBehaviour
 {
 
     [SerializeField] public EntityHolder holder;
@@ -46,7 +46,7 @@ public class Entity : MonoBehaviour
             setName();
 
         body.transform.SetParent(transform);
-        transform.SetParent(holder.transform);
+        //transform.SetParent(holder.transform);
         //body.AddComponent(typeof(Entity)) as Entity;
     }
 
@@ -87,6 +87,8 @@ public class Entity : MonoBehaviour
 
     private void OnTickEvent() 
     {
+        if (!IsOwner || !body)
+            return;
 
         checkForMultiply();
         //Debug.Log("Tick from" + name);
@@ -97,7 +99,7 @@ public class Entity : MonoBehaviour
 
             if (currHunger >= holder.profile.maxHungerBeforeDeath)
             {
-                Destroy(gameObject);
+                onDestroyServerRpc();
             }
             //Add running from predator
             else
@@ -133,5 +135,22 @@ public class Entity : MonoBehaviour
             currHunger = 0;
 
         searching = false;
+    }
+
+    public Vector3 GetRandomPoint(Transform point = null, float radius = 0)
+    {
+        return holder.system.points.GetRandomPoint(point, radius);
+    }
+
+    [ServerRpc]
+    public void onDestroyServerRpc()
+    {
+        holder.system.OnTick -= OnTickEvent; //UnSubZ
+        --holder.currCounter;
+        OnEntityDied?.Invoke(name);
+
+        if(IsSpawned)
+            GetComponent<NetworkObject>().Despawn();
+        Destroy(gameObject);
     }
 }

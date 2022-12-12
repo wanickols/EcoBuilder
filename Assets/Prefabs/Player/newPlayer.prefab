@@ -810,8 +810,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 02b9b28bf5ede2846ad38e52de8921b7, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  speed: 9
-  moveDirection: {x: 0, y: 0, z: 0}
+  movementSpeed: 7
+  rotationSpeed: 400
+  movement: {x: 0, y: 0, z: 0}
 --- !u!114 &-7181916363242268959
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -855,7 +856,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   SyncPositionX: 1
-  SyncPositionY: 0
+  SyncPositionY: 1
   SyncPositionZ: 1
   SyncRotAngleX: 0
   SyncRotAngleY: 1

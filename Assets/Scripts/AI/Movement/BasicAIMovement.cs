@@ -6,28 +6,27 @@ using UnityEngine.AI;
 public class BasicAIMovement : MonoBehaviour
 {
 
-    public CharacterController controller;
-    public Transform target;
+    [SerializeField] protected CharacterController controller;
+    [SerializeField] protected Transform target;
 
-    protected FieldOfView fov;
-
-    protected bool running; //mot sure if this wil stay here
-
-    public NavMeshAgent agent;
+    [SerializeField] protected FieldOfView fov;
+    [SerializeField] protected NavMeshAgent agent;
     public float movementRadius;
+    [SerializeField] protected Entity entity;
 
-    
+
 
     // Start is called before the first frame update
     protected void Start()
     {
-        fov = GetComponent<FieldOfView>();
+        if (!entity)
+            entity = GetComponent<Entity>();
+        if (!fov)
+            fov = GetComponent<FieldOfView>();
         fov.OnTargetFound += Fov_OnTargetFound;
-        
-        agent = GetComponent<NavMeshAgent>();
-        running = false;
+        if (!agent)
+            agent = GetComponent<NavMeshAgent>();
         movementRadius = fov.viewRadius;
-       
     }
 
 
@@ -35,7 +34,6 @@ public class BasicAIMovement : MonoBehaviour
     private void Fov_OnTargetFound()
     {
         target = fov.targetTransform;
-        fov.OnTargetFound += Fov_OnTargetFound;
     }
 
     // Update is called once per frame
@@ -69,7 +67,7 @@ public class BasicAIMovement : MonoBehaviour
         if (!agent.hasPath || agent.velocity.sqrMagnitude == 0f)
         {
             //Debug.Log("I'm movin");
-            agent.SetDestination(GetPoints.Instance.GetRandomPoint(transform, movementRadius));
+            agent.SetDestination(entity.GetRandomPoint(transform, movementRadius));
         }
         else 
         {

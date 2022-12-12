@@ -2,6 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using System;
+using Unity.Netcode;
 
 public class EcoSystem : MonoBehaviour
 {
@@ -12,7 +13,7 @@ public class EcoSystem : MonoBehaviour
     [Header("System Settings")]
     [SerializeField] private float tickDurationInSec = 1.0f;
     [SerializeField] public EntityProfile grassProfile, bunnyProfile, foxProfile;
-    [SerializeField] public EntityHolder grassHolder, bunnyHolder, foxHolder; //folders objects for entities 
+    [SerializeField] public NetworkVariable<EntityHolder> grassHolder, bunnyHolder, foxHolder = new NetworkVariable<EntityHolder>(); //holders for entities
     [SerializeField] public int maxCount;
 
     [Header("Session Settings")]
@@ -29,6 +30,8 @@ public class EcoSystem : MonoBehaviour
     [SerializeField] public int xMax;
     [SerializeField] public int xMin, yMax, yMin, zMax, zMin;
 
+    [SerializeField] public GetPoints points;
+
     // Start is called before the first frame update
     void Start()
     {
@@ -39,24 +42,24 @@ public class EcoSystem : MonoBehaviour
     void initEcosystem()
     {
         //Holder init
-        grassHolder.Init("Grass", this);
-        bunnyHolder.Init("Bunnies", this);
-        foxHolder.Init("Foxes", this);
+        grassHolder.Value.Init("Grass", this);
+        bunnyHolder.Value.Init("Bunnies", this);
+        foxHolder.Value.Init("Foxes", this);
 
         //Create entities
         for (int i = 0; i < startingGrass; i++)
         {
-            createEntity(grassHolder);
+            createEntity(grassHolder.Value);
         }
 
         for (int i = 0; i < startingBunny; i++)
         {
-            createEntity(bunnyHolder);
+            createEntity(bunnyHolder.Value);
         }
 
         for (int i = 0; i < startingFox; i++)
         {
-            createEntity(foxHolder);
+            createEntity(foxHolder.Value);
         }
         updateCounts();
     }
@@ -97,9 +100,9 @@ public class EcoSystem : MonoBehaviour
     
     public void updateCounts() 
     {
-        currGrassCount = grassHolder.currCounter;
-        currBunnyCount = bunnyHolder.currCounter;
-        currFoxCount = foxHolder.currCounter;
+        currGrassCount = grassHolder.Value.currCounter;
+        currBunnyCount = bunnyHolder.Value.currCounter;
+        currFoxCount = foxHolder.Value.currCounter;
     }
    
 

@@ -1,8 +1,9 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using Unity.Netcode;
 
-public class Player : MonoBehaviour
+public class Player : NetworkBehaviour
 {
 
     [SerializeField] private GameObject myPrefab;
@@ -15,17 +16,24 @@ public class Player : MonoBehaviour
 
     private void Update()
     {
+        if (!IsOwner)
+            return;
+
         if (Input.GetButtonDown("Interact")) 
         {
-            spawn();
+            SpawnServerRpc();
         }
     }
 
-    private void spawn() 
+    [ServerRpc]
+    private void SpawnServerRpc()
     {
 
         //Make grid 
-        Instantiate(myPrefab, this.transform.position, Quaternion.identity);
+     
+        GameObject go = Instantiate(myPrefab, this.transform.position, Quaternion.identity);
+        go.GetComponent<NetworkObject>().SpawnWithOwnership(OwnerClientId);
+
         playerPlanted.Raise();
     }
 

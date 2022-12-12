@@ -31,7 +31,7 @@ public class EntityHolder : ScriptableObject
         this.system = system;
         currCounter = createdCounter = 0;
         maxCounter = system.maxCount;
-        transform.SetParent(system.transform);
+        //transform.SetParent(system.transform);
     }
 
     public Vector3 getSpawnLocation() 

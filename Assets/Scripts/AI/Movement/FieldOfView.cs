@@ -15,13 +15,15 @@ public class FieldOfView : MonoBehaviour
 
     [SerializeField] protected bool searching, running;
 
+    private int searchCount = 0;
+
     private void Start()
     {
         startSearching();
     }
 
     //Public classes for messages
-    public void startSearching() { searching = true; StartCoroutine(FindTargetWithDelay(.2f)); }
+    public void startSearching() { searching = true; }
 
     public void checkMultiply(EntityProfile profile) 
     {
@@ -57,17 +59,15 @@ public class FieldOfView : MonoBehaviour
         }
         return filteredResults;
     }
-    //Coroutine
-    IEnumerator FindTargetWithDelay(float delay) //searching for target
+
+    private void Update()
     {
-        while (searching) 
+        if (searching)
         {
-            //Debug.Log("Searching " + searching + viewRadius);
-            yield return new WaitForSeconds(delay);
-            if (FindClosestTarget()) 
-            {
+            if (FindClosestTarget())
                 OnTargetFound?.Invoke();
-            }
+            if (targetTransform)
+                searching = false;
         }
     }
 

@@ -2,18 +2,26 @@ using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
-
-public class GrassAI : MonoBehaviour
+using Unity.Netcode;
+public class GrassAI : NetworkBehaviour
 {
     private bool eatAllowed = true;
     public EntityProfile profile;
-    protected FieldOfView fov;
+    [SerializeField] protected FieldOfView fov;
+    [SerializeField] private Entity entity;
 
 
-    protected void Start() 
+    protected void Start()
     {
-        fov = GetComponent<FieldOfView>();
-        Entity entity = GetComponent<Entity>();
+        if (!IsOwner)
+            return;
+
+        if (!fov)
+            fov = GetComponent<FieldOfView>();
+
+        if (!entity)
+            entity = GetComponent<Entity>();
+
         fov.OnMultiply += entity.Fov_OnMultiply;
     }
 
@@ -22,12 +30,15 @@ public class GrassAI : MonoBehaviour
     {
         //Play eaten sounds
         yield return new WaitForSeconds(1);
-        
-        Destroy(this.gameObject);
+
+        entity.onDestroyServerRpc();
     }
 
     private void OnTriggerEnter(Collider collision)
     {
+        if (!IsOwner)
+            return;
+
         if (!eatAllowed)
             return;
 

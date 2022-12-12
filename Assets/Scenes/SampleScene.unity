@@ -1831,6 +1831,14 @@ PrefabInstance:
       propertyPath: m_Name
       value: EcoSystem
       objectReference: {fileID: 0}
+    - target: {fileID: 3205823897596633074, guid: 132cf42adbb28ef449358c44f2c24f4e, type: 3}
+      propertyPath: startingBunny
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 3205823897596633074, guid: 132cf42adbb28ef449358c44f2c24f4e, type: 3}
+      propertyPath: startingGrass
+      value: 2
+      objectReference: {fileID: 0}
     - target: {fileID: 3205823897596633075, guid: 132cf42adbb28ef449358c44f2c24f4e, type: 3}
       propertyPath: m_RootOrder
       value: 0
